@@ -1,0 +1,81 @@
+#E2
+@name Loto
+@inputs W:wirelink E:entity
+@persist Lot OnOff I
+W:egpClear()
+interval(500)
+if(first()&duped()){
+    E=owner()
+    Lot=0
+    OnOff=0
+    printColor(vec(0,255,0),"AvtoLottery Is Enable")
+    }
+    Time=91
+if(Lot==0){
+    OnOff=0
+    }
+if(OnOff==1)
+{if(clk("lot"))
+    {
+         nxLottery
+         printColor(vec(255,215,0),"Стаpт Лотеpеии на:"+Lot)
+    }}
+#EGP
+W:egpBox(1,vec2(255,255),vec2(600,600))
+W:egpBox(2,vec2(255,255),vec2(475,475))
+W:egpColor(2,vec(50,50,50))
+I=(I+2)%460
+W:egpColor(1,hsv2rgb(I,1,1))
+W:egpText(3,"Version V2.0 By Kirill Noy",vec2(155,490))
+W:egpText(4,"AutoLot",vec2(152,52))
+W:egpSize(4,60)
+W:egpText(5,"AutoLot",vec2(155,50))
+W:egpSize(5,58)
+W:egpColor(4,vec(0,51,102))
+W:egpColor(5,vec(0,153,51))
+#Icon
+W:egpBox(6,vec2(325,255),vec2(65,65))
+W:egpMaterial(6,"icon16/coins_add.png")
+W:egpBox(7,vec2(175,255),vec2(65,65))
+W:egpMaterial(7,"icon16/coins_delete.png")
+#icon
+W:egpText(8,"Лотеpея На:"+Lot,vec2(105,155))
+W:egpSize(8,35)
+W:egpRoundedBox(9,vec2(255,355),vec2(300,95))
+W:egpColor(9,vec(113,113,113))
+W:egpSize(12,35)
+#EGP
+#Function
+if(Lot>=50000){
+    W:egpColor(8,vec(255,245,0))
+    }
+Cursor = W:egpCursor(E:owner()) #Defines Cursor
+ 
+function number b1(Num){
+    return inrange(Cursor,W:egpPos(Num) - W:egpSize(Num)/2,W:egpPos(Num) + W:egpSize(Num)/2)
+}
+if(b1(6)){
+if(Lot<100000){
+Lot+=5000
+}}
+if(OnOff==0){
+    W:egpRoundedBox(10,vec2(175,355),vec2(120,90))
+    W:egpText(11,"Off",vec2(155,340))
+    W:egpSize(11,30)
+    W:egpColor(10,vec(255,0,0))
+    if(b1(10)){OnOff=1}
+    }else{
+    W:egpRoundedBox(10,vec2(335,355),vec2(120,90))
+    W:egpColor(10,vec(0,255,0))
+    W:egpText(11,"On",vec2(318,340))
+    W:egpSize(11,30)
+    if(b1(10)){OnOff=0}
+}
+if(b1(7)){if(Lot>0){Lot-=5000}}
+#Function
+#Time
+if(OnOff==1){
+timer("lot",91000)
+timer("Time",1000)
+}
+#Time
