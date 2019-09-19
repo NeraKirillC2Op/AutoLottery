@@ -17,7 +17,7 @@ if(Lot==0){
 if(OnOff==1)
 {if(clk("lot"))
     {
-         nxLottery
+         nxLottery(Lot)
          printColor(vec(255,215,0),"Стаpт Лотеpеии на:"+Lot)
     }}
 #EGP
